@@ -1,0 +1,72 @@
+﻿@page
+@model DemoPages.Pages.User.UserModel
+@{
+    ViewData["Title"] = "User";
+}
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .user-frame {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 600px;
+        height: 400px;
+    }
+
+    .input-align {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .input-field {
+        display: flex;
+        justify-content: space-evenly;
+        width: 50%;
+    }
+
+    .inp-email {
+        width:100%;
+        display:flex;
+    }
+    .smt {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+<form method="post">
+    <div class="user-frame">
+        <div class="input-align">
+            <div class="input-field">
+                <label>Firstname :</label>
+                <input type="text" asp-for="Info.FirstName"/>
+            </div>
+            <div class="input-field">
+                <label>LastName :</label>
+                <input type="text" asp-for="Info.LastName"/>
+            </div>
+        </div>
+        <div class="inp-email">
+            <label style="width:120px;">Email :</label>
+            <input style="width: inherit;" type="email" asp-for="Info.MailID">
+        </div>
+        <div class="input-align">
+            <div class="input-field">
+                <label>PassWord :</label>
+                <input type="password" asp-for="Info.Password"/>
+            </div>
+            <div class="input-field">
+                <label>Department :</label>
+                <input type="text" asp-for="Info.Department"/>
+            </div>
+        </div>
+        <div class="smt">
+            <input type="submit"/>
+        </div>
+    </div>
+ </form>

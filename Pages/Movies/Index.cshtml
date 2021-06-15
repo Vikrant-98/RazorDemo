@@ -10,12 +10,62 @@
     <a asp-page="./LoginPage">Logout</a>
 </p>
 
-<h1>Index</h1>
-@*<h3>Session : @Model.Username</h3>*@
+<h1>Create</h1>
 
-<p>
-    <a asp-page="./Create">Create New</a>
-</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="OnPostAsync">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Clubh.Slot" class="control-label"></label>
+                <input asp-for="Clubh.Slot" class="form-control" />
+                <span asp-validation-for="Clubh.Slot" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clubh.EntryTime" class="control-label"></label>
+                <input asp-for="Clubh.EntryTime" class="form-control" />
+                <span asp-validation-for="Clubh.EntryTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clubh.Price" class="control-label"></label>
+                <input asp-for="Clubh.Price" class="form-control" />
+                <span asp-validation-for="Clubh.Price" class="text-danger"></span>
+            </div>
+            <label for="State">Choose a State:</label>
+            <select name="State" id="State" style="width:100%" >
+                <option value="select">---------Select---------</option>
+                @foreach (var item in Model.State)
+                {
+                    <option value=@item.Id>@Html.DisplayFor(modelItem => item.StateName)</option>
+                }
+            </select>
+            <label for="State">Choose a City:</label>
+            @if (@Model.City != null)
+            {
+                <select name="City" id="City" style="width:100%" >
+                    <option value="select">---------Select---------</option>
+                    @foreach (var item in Model.City)
+                    {
+                        <option value=@item.CityName>@Html.DisplayFor(modelItem => item.CityName)</option>
+                    }
+                </select>
+            }
+            else
+            {
+                <select name="City" id="City" style="width:100%">
+                    <option value="select">---------Select---------</option>
+                </select>
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+
 <table class="table">
     <thead>
         <tr>
@@ -53,3 +103,35 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script type="text/javascript">
+        $('#State').change(function () {
+            debugger;
+            var selectedState = $("#State").val();
+            var citySelect = $('#City');
+            //citySelect.empty();
+            if (selectedState != null && selectedState != '') {
+        $.ajax({
+          type: "Get",
+            url: "/Movies/OnGetCity?id="+{selectedState},
+          contentType: "json; charset=utf-8",
+          success: function (city) {
+              if (city != null && !jQuery.isEmptyObject(city)) {
+                  citySelect.append($('<option/>', {
+                value: null,
+                text: ""
+              }));
+                  $.each(regions, function (index, city) {
+                      citySelect.append("<option value='" + city.value + "'>" + city.text + "</option>");
+              });
+            };
+          },
+          failure: function (response) {
+            alert(response);
+          }
+        });
+      }
+    });
+    </script>
+}

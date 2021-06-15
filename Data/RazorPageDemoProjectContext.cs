@@ -17,5 +17,11 @@ namespace RazorPageDemoProject.Data
         public DbSet<Club> Club { get; set; }
 
         public DbSet<Users> UserCredentials { get; set; }
+
+        public DbSet<City> City { get; set; }
+
+        public DbSet<State> State { get; set; }
+
+        
     }
 }
